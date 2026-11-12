@@ -1,0 +1,64 @@
+@model QuanLyThuVien.Models.Category
+
+@{
+    ViewData["Title"] = "Chi tiết thể loại - Lab 4";
+    bool isManager = User.IsInRole("Admin") || User.IsInRole("Manager");
+}
+
+<div class="row justify-content-center mt-4 mb-5">
+    <div class="col-md-6">
+        <div class="card shadow border-0">
+            <div class="card-header bg-info text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-info-circle"></i> Chi Tiết Thể Loại Sách (Policy: EmployeeOrManager)</h5>
+            </div>
+            <div class="card-body p-4">
+                <dl class="row">
+                    <dt class="col-sm-4 text-muted">Mã thể loại:</dt>
+                    <dd class="col-sm-8 fw-bold">#@Model.Id</dd>
+
+                    <dt class="col-sm-4 text-muted">Tên thể loại:</dt>
+                    <dd class="col-sm-8 text-primary fw-bold">@Model.Name</dd>
+
+                    <dt class="col-sm-4 text-muted">Mô tả:</dt>
+                    <dd class="col-sm-8">@(Model.Description ?? "Không có mô tả")</dd>
+
+                    <dt class="col-sm-4 text-muted">Hình ảnh:</dt>
+                    <dd class="col-sm-8">
+                        @if (!string.IsNullOrEmpty(Model.Image))
+                        {
+                            <img src="@Model.Image" alt="@Model.Name" class="rounded border p-1" style="max-height: 150px;" />
+                        }
+                        else
+                        {
+                            <span class="badge bg-light text-muted border p-2">Không có hình ảnh</span>
+                        }
+                    </dd>
+
+                    <dt class="col-sm-4 text-muted">Trạng thái:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Active)
+                        {
+                            <span class="badge bg-success">Đang sử dụng</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Tạm ngưng</span>
+                        }
+                    </dd>
+                </dl>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Quay lại danh sách
+                    </a>
+                    @if (isManager)
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                            <i class="bi bi-pencil"></i> Chỉnh sửa
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

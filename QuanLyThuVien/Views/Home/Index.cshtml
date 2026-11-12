@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Trang chủ - Hệ thống Thư viện Điện tử";
+}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+    <div class="container-fluid py-3">
+        <h1 class="display-5 fw-bold text-primary">📚 Hệ Thống Quản Lý Thư Viện Điện Tử</h1>
+        <p class="col-md-9 fs-5 text-muted">
+            Bài thực hành <strong>LAB 4</strong>: Xây dựng cơ chế Xác thực (Cookie Authentication), Phân quyền theo Policy và Thao tác CRUD có kiểm soát quyền truy cập.
+        </p>
+        <div class="mb-4">
+            <span class="badge bg-secondary p-2 me-1">Môn học: NET108 / SOF1022</span>
+            <span class="badge bg-info text-dark p-2 me-1">Sinh viên: TB02357</span>
+            <span class="badge bg-dark p-2">Nhóm thực hiện: Nhóm 5</span>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+            @if (User.Identity != null && User.Identity.IsAuthenticated)
+            {
+                <a asp-controller="Categories" asp-action="Index" class="btn btn-primary btn-lg shadow-sm">
+                    <i class="bi bi-tags"></i> Quản Lý Danh Mục Thể Loại (CRUD)
+                </a>
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    <button type="submit" class="btn btn-outline-danger btn-lg">
+                        <i class="bi bi-box-arrow-right"></i> Đăng Xuất (@User.Identity.Name)
+                    </button>
+                </form>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login" class="btn btn-primary btn-lg shadow-sm">
+                    <i class="bi bi-box-arrow-in-right"></i> Đăng Nhập Hệ Thống
+                </a>
+                <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-primary btn-lg">
+                    <i class="bi bi-shield-lock"></i> Vào Thử Danh Mục (Sẽ yêu cầu đăng nhập)
+                </a>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-2">
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-primary"><i class="bi bi-shield-check"></i> Bài 1: Cookie & Policy</h5>
+                <p class="card-text text-muted">
+                    Cấu hình xác thực Cookie trong <code>Program.cs</code>, thời gian sống 24h, phân tách 2 chính sách: <code>EmployeeOrManager</code> và <code>ManagerOnly</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-success"><i class="bi bi-person-badge"></i> Bài 2: Đăng Nhập / Ra</h5>
+                <p class="card-text text-muted">
+                    Controller <code>AccountController</code> tạo danh sách Claims, hỗ trợ RememberMe, kiểm tra tài khoản từ SQL Server qua <code>EmployeeDAL</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-warning"><i class="bi bi-folder-check"></i> Bài 3: CRUD Danh Mục</h5>
+                <p class="card-text text-muted">
+                    <code>CategoriesController</code> bảo vệ chặt chẽ: Thủ thư chỉ được xem, Quản lý/Admin mới có quyền Thêm, Sửa, Xóa và Upload ảnh qua <code>FileUtil</code>.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

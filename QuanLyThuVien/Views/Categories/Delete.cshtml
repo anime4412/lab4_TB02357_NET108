@@ -1,0 +1,55 @@
+@model QuanLyThuVien.Models.Category
+
+@{
+    ViewData["Title"] = "Xác nhận xóa thể loại - Lab 4";
+}
+
+<div class="row justify-content-center mt-4 mb-5">
+    <div class="col-md-6">
+        <div class="card shadow border-danger">
+            <div class="card-header bg-danger text-white py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-trash"></i> Xác Nhận Xóa Thể Loại Sách (Chỉ Quản Lý - ManagerOnly)</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> Bạn có chắc chắn muốn xóa thể loại sách này không? Thao tác này không thể hoàn tác!
+                </div>
+
+                <dl class="row mb-4">
+                    <dt class="col-sm-4 text-muted">Mã thể loại:</dt>
+                    <dd class="col-sm-8 fw-bold">#@Model.Id</dd>
+
+                    <dt class="col-sm-4 text-muted">Tên thể loại:</dt>
+                    <dd class="col-sm-8 text-primary fw-bold">@Model.Name</dd>
+
+                    <dt class="col-sm-4 text-muted">Mô tả:</dt>
+                    <dd class="col-sm-8">@(Model.Description ?? "Không có mô tả")</dd>
+
+                    <dt class="col-sm-4 text-muted">Trạng thái:</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.Active)
+                        {
+                            <span class="badge bg-success">Đang dùng</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">Tạm ngưng</span>
+                        }
+                    </dd>
+                </dl>
+
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Hủy bỏ
+                        </a>
+                        <button type="submit" class="btn btn-danger fw-bold px-4">
+                            <i class="bi bi-trash"></i> Đồng Ý Xóa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
