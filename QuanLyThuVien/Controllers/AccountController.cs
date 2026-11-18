@@ -9,7 +9,7 @@ using QuanLyThuVien.Models;
 namespace QuanLyThuVien.Controllers
 {
     /// <summary>
-    /// BÀI 2 (3 ĐIỂM): XÂY DỰNG CHỨC NĂNG ĐĂNG NHẬP VÀ ĐĂNG XUẤT VỚI COOKIE
+    /// BÀI 2 (3 ĐIỂM): XÂY DỰNG CHỨC NĂNG ĐĂNG NHẬP VÀ ĐĂNG XUẤT VỚI COOKIE & EF CORE CODE FIRST
     /// </summary>
     public class AccountController : Controller
     {
@@ -49,15 +49,13 @@ namespace QuanLyThuVien.Controllers
                 return View(model);
             }
 
-            // Kiểm tra tài khoản từ CSDL SQL Server qua EmployeeDAL
-            var user = EmployeeDAL.Authenticate(model.Email, model.Password);
+            // Kiểm tra tài khoản từ CSDL SQL Server qua EmployeeDAL (EF Core Code First)
+            var user = _employeeDal.Authenticate(model.Email, model.Password);
 
             if (user != null)
             {
-                // Chuẩn hóa tên vai trò phù hợp với Policy
                 var roleName = user.Role; // "Admin" hoặc "Librarian"
 
-                // Thiết lập các Claim danh tính
                 var claims = new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -76,10 +74,8 @@ namespace QuanLyThuVien.Controllers
                     ExpiresUtc = model.RememberMe ? DateTimeOffset.UtcNow.AddHours(24) : null
                 };
 
-                // Đăng nhập và tạo Cookie
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
-                // Chuyển hướng an toàn
                 if (Url.IsLocalUrl(model.ReturnUrl))
                 {
                     return LocalRedirect(model.ReturnUrl);

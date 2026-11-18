@@ -6,7 +6,7 @@
     <div class="container-fluid py-3">
         <h1 class="display-5 fw-bold text-primary">📚 Hệ Thống Quản Lý Thư Viện Điện Tử</h1>
         <p class="col-md-9 fs-5 text-muted">
-            Bài thực hành <strong>LAB 4</strong>: Xây dựng cơ chế Xác thực (Cookie Authentication), Phân quyền theo Policy và Thao tác CRUD có kiểm soát quyền truy cập.
+            Bài thực hành <strong>LAB 4</strong>: Xây dựng cơ chế Xác thực (Cookie Authentication), Phân quyền theo Policy và Thao tác CRUD sử dụng <strong>Entity Framework Core Code First</strong>.
         </p>
         <div class="mb-4">
             <span class="badge bg-secondary p-2 me-1">Môn học: NET108 / SOF1022</span>
@@ -45,7 +45,7 @@
             <div class="card-body">
                 <h5 class="card-title text-primary"><i class="bi bi-shield-check"></i> Bài 1: Cookie & Policy</h5>
                 <p class="card-text text-muted">
-                    Cấu hình xác thực Cookie trong <code>Program.cs</code>, thời gian sống 24h, phân tách 2 chính sách: <code>EmployeeOrManager</code> và <code>ManagerOnly</code>.
+                    Cấu hình xác thực Cookie và <code>LibraryDbContext</code> (Code First) trong <code>Program.cs</code>, thời gian sống 24h, phân tách 2 chính sách: <code>EmployeeOrManager</code> và <code>ManagerOnly</code>.
                 </p>
             </div>
         </div>
@@ -55,7 +55,7 @@
             <div class="card-body">
                 <h5 class="card-title text-success"><i class="bi bi-person-badge"></i> Bài 2: Đăng Nhập / Ra</h5>
                 <p class="card-text text-muted">
-                    Controller <code>AccountController</code> tạo danh sách Claims, hỗ trợ RememberMe, kiểm tra tài khoản từ SQL Server qua <code>EmployeeDAL</code>.
+                    Controller <code>AccountController</code> tạo danh sách Claims, hỗ trợ RememberMe, xác thực tài khoản qua <code>EmployeeDAL</code> (EF Core Code First).
                 </p>
             </div>
         </div>

@@ -1,20 +1,19 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using QuanLyThuVien.DAL;
+using QuanLyThuVien.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Cấu hình kết nối CSDL cho DBUtil từ appsettings.json
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-if (!string.IsNullOrEmpty(connectionString))
-{
-    DBUtil.connString = connectionString;
-}
+// Cấu hình Entity Framework Core Code First với SQL Server
+builder.Services.AddDbContext<LibraryDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllersWithViews();
 
-// Đăng ký DI cho các lớp DAL
-builder.Services.AddTransient<EmployeeDAL>();
-builder.Services.AddTransient<CategoryDAL>();
+// Đăng ký DI cho các lớp DAL (Scoped theo vòng đời DbContext)
+builder.Services.AddScoped<EmployeeDAL>();
+builder.Services.AddScoped<CategoryDAL>();
 
 // ==============================================================================
 // BÀI 1 (4 ĐIỂM): CẤU HÌNH XÁC THỰC VÀ PHÂN QUYỀN
